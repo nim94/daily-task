@@ -1,6 +1,13 @@
-endpoint: ${env:PRISMA_ENDPOINT}
+endpoint: http://localhost:4466
 datamodel: datamodel.prisma
-# secret: ${env:PRISMA_SECRET}
+secret: ${env:PRISMA_SECRET}
+
+generate:
+  - generator: javascript-client
+    output: ./generated/prisma-client/
+	
 hooks:
   post-deploy:
     - graphql get-schema -p prisma
+	
+	
