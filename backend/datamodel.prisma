@@ -1,4 +1,40 @@
 type User {
   id: ID! @unique
   name: String!
+  mail: String!
+  psw: String! 
+}
+
+type Task {
+  id: ID! @unique
+  name: String!
+  begin: String
+  end: String
+  steps: [Step]
+  type: Task_type
+  priority: Int
+}
+
+enum Task_type {
+  SPECIAL
+  BASE
+  DATE_TO_DATE
+  DAILY
+  FERIAL
+  WEEKLY
+}
+
+type Step {
+  name: String!
+  time: String!
+  color: String
+  notify: Boolean
+}
+
+type Task_class {
+  id: ID! @unique
+  name: String!
+  tasks: [Task!]!
+  begin: String
+  end: String
 }
