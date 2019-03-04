@@ -1,6 +1,9 @@
 import App, { Container } from 'next/app';
 import Page from '../components/Page';
 import { ApolloProvider } from 'react-apollo';
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import rootReducer from '../components/reducers'
 import withData from '../lib/withData';
 
 class AppWrap extends App {
@@ -15,14 +18,17 @@ class AppWrap extends App {
 
   render() {
     const { Component, apollo, pageProps } = this.props;
+    const store = createStore(rootReducer)
 
     return (
       <Container>
-        <ApolloProvider client={apollo}>
-          <Page>
-            <Component {...pageProps} />
-          </Page>
-        </ApolloProvider>
+        <Provider store={store}>
+          <ApolloProvider client={apollo}>
+            <Page>
+              <Component {...pageProps} />
+            </Page>
+          </ApolloProvider>
+        </Provider>
       </Container>
     );
   }

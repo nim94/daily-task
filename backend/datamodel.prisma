@@ -15,7 +15,7 @@ type Task {
   priority: Int
 }
 
-enum Task_type {
+enum TaskType {
   SPECIAL
   BASE
   DATE_TO_DATE
@@ -31,7 +31,7 @@ type Step {
   notify: Boolean
 }
 
-type Task_class {
+type TaskClass {
   id: ID! @unique
   name: String!
   tasks: [Task!]!
