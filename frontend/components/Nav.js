@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+/* import styled, { ThemeProvider, createGlobalStyle } from 'styled-components'; */
 import Link from 'next/link';
 
 class Nav extends Component {

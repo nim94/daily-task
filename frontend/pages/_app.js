@@ -1,10 +1,10 @@
 import App, { Container } from 'next/app';
 import Page from '../components/Page';
 import { ApolloProvider } from 'react-apollo';
-import { Provider } from 'react-redux'
+/* import { Provider } from 'react-redux'
 import { createStore } from 'redux'
-import rootReducer from '../components/reducers'
-import withData from '../lib/withData';
+import rootReducer from '../components/reducers' */
+import withApollo from '../lib/withApollo'; 
 
 class AppWrap extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -17,21 +17,21 @@ class AppWrap extends App {
   }
 
   render() {
-    const { Component, apollo, pageProps } = this.props;
-    const store = createStore(rootReducer)
+    const { Component, apolloClient, pageProps } = this.props;
+    /* const store = createStore(rootReducer) */
 
     return (
       <Container>
-        <Provider store={store}>
-          <ApolloProvider client={apollo}>
+       {/*  <Provider store={store}> */}
+          <ApolloProvider client={apolloClient}>
             <Page>
               <Component {...pageProps} />
             </Page>
           </ApolloProvider>
-        </Provider>
+        {/* </Provider> */}
       </Container>
     );
   }
 }
 
-export default withData(AppWrap);
+export default withApollo(AppWrap);

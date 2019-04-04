@@ -1,6 +1,6 @@
 import Router from 'next/router';
 import NProgress from 'nprogress';
-
+import React, { Component } from 'react';
 import Nav from "./Nav";
 
 Router.onRouteChangeStart = () => {
@@ -13,15 +13,12 @@ Router.onRouteChangeError = () => {
   NProgress.done();
 }
 
-const Header = () => (
-  <div>
-    <div>
-      <Nav />
-    </div>
-    <div>
-      <p>Search</p>
-    </div>
-  </div>
-);
+class Header extends Component {
+  static async getInitialProps (ctx) {
+    
+  }
+
+  render(){ return null }
+}
 
 export default Header;

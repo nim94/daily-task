@@ -1,3 +1,0 @@
-class Navlink extends Component {
-    
-}
