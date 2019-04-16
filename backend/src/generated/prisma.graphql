@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Mon Mar 04 2019 10:36:05 GMT+0100 (GMT+01:00)
+# timestamp: Thu Apr 04 2019 10:06:40 GMT+0200 (GMT+02:00)
 
 type AggregateStep {
   count: Int!
@@ -9,7 +9,7 @@ type AggregateTask {
   count: Int!
 }
 
-type AggregateTask_class {
+type AggregateTaskClass {
   count: Int!
 }
 
@@ -33,26 +33,26 @@ scalar Long
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
-  createTask_class(data: Task_classCreateInput!): Task_class!
-  createStep(data: StepCreateInput!): Step!
+  createTaskClass(data: TaskClassCreateInput!): TaskClass!
   createTask(data: TaskCreateInput!): Task!
+  createStep(data: StepCreateInput!): Step!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
-  updateTask_class(data: Task_classUpdateInput!, where: Task_classWhereUniqueInput!): Task_class
+  updateTaskClass(data: TaskClassUpdateInput!, where: TaskClassWhereUniqueInput!): TaskClass
   updateTask(data: TaskUpdateInput!, where: TaskWhereUniqueInput!): Task
   deleteUser(where: UserWhereUniqueInput!): User
-  deleteTask_class(where: Task_classWhereUniqueInput!): Task_class
+  deleteTaskClass(where: TaskClassWhereUniqueInput!): TaskClass
   deleteTask(where: TaskWhereUniqueInput!): Task
   upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
-  upsertTask_class(where: Task_classWhereUniqueInput!, create: Task_classCreateInput!, update: Task_classUpdateInput!): Task_class!
+  upsertTaskClass(where: TaskClassWhereUniqueInput!, create: TaskClassCreateInput!, update: TaskClassUpdateInput!): TaskClass!
   upsertTask(where: TaskWhereUniqueInput!, create: TaskCreateInput!, update: TaskUpdateInput!): Task!
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  updateManyTask_classes(data: Task_classUpdateManyMutationInput!, where: Task_classWhereInput): BatchPayload!
-  updateManySteps(data: StepUpdateManyMutationInput!, where: StepWhereInput): BatchPayload!
+  updateManyTaskClasses(data: TaskClassUpdateManyMutationInput!, where: TaskClassWhereInput): BatchPayload!
   updateManyTasks(data: TaskUpdateManyMutationInput!, where: TaskWhereInput): BatchPayload!
+  updateManySteps(data: StepUpdateManyMutationInput!, where: StepWhereInput): BatchPayload!
   deleteManyUsers(where: UserWhereInput): BatchPayload!
-  deleteManyTask_classes(where: Task_classWhereInput): BatchPayload!
-  deleteManySteps(where: StepWhereInput): BatchPayload!
+  deleteManyTaskClasses(where: TaskClassWhereInput): BatchPayload!
   deleteManyTasks(where: TaskWhereInput): BatchPayload!
+  deleteManySteps(where: StepWhereInput): BatchPayload!
   executeRaw(database: PrismaDatabase, query: String!): Json!
 }
 
@@ -89,16 +89,16 @@ enum PrismaDatabase {
 
 type Query {
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
-  task_classes(where: Task_classWhereInput, orderBy: Task_classOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task_class]!
-  steps(where: StepWhereInput, orderBy: StepOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Step]!
+  taskClasses(where: TaskClassWhereInput, orderBy: TaskClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TaskClass]!
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task]!
+  steps(where: StepWhereInput, orderBy: StepOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Step]!
   user(where: UserWhereUniqueInput!): User
-  task_class(where: Task_classWhereUniqueInput!): Task_class
+  taskClass(where: TaskClassWhereUniqueInput!): TaskClass
   task(where: TaskWhereUniqueInput!): Task
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
-  task_classesConnection(where: Task_classWhereInput, orderBy: Task_classOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): Task_classConnection!
-  stepsConnection(where: StepWhereInput, orderBy: StepOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StepConnection!
+  taskClassesConnection(where: TaskClassWhereInput, orderBy: TaskClassOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskClassConnection!
   tasksConnection(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TaskConnection!
+  stepsConnection(where: StepWhereInput, orderBy: StepOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StepConnection!
 
   """Fetches an object given its ID"""
   node(
@@ -504,23 +504,25 @@ input StepWhereInput {
 
 type Subscription {
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
-  task_class(where: Task_classSubscriptionWhereInput): Task_classSubscriptionPayload
-  step(where: StepSubscriptionWhereInput): StepSubscriptionPayload
+  taskClass(where: TaskClassSubscriptionWhereInput): TaskClassSubscriptionPayload
   task(where: TaskSubscriptionWhereInput): TaskSubscriptionPayload
+  step(where: StepSubscriptionWhereInput): StepSubscriptionPayload
 }
 
 type Task implements Node {
   id: ID!
+  userId: String!
   name: String!
   begin: String
   end: String
   steps(where: StepWhereInput, orderBy: StepOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Step!]
-  type: Task_type
+  type: TaskType
   priority: Int
 }
 
-type Task_class implements Node {
+type TaskClass implements Node {
   id: ID!
+  userId: String!
   name: String!
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
   begin: String
@@ -528,16 +530,17 @@ type Task_class implements Node {
 }
 
 """A connection to a list of items."""
-type Task_classConnection {
+type TaskClassConnection {
   """Information to aid in pagination."""
   pageInfo: PageInfo!
 
   """A list of edges."""
-  edges: [Task_classEdge]!
-  aggregate: AggregateTask_class!
+  edges: [TaskClassEdge]!
+  aggregate: AggregateTaskClass!
 }
 
-input Task_classCreateInput {
+input TaskClassCreateInput {
+  userId: String!
   name: String!
   begin: String
   end: String
@@ -545,17 +548,19 @@ input Task_classCreateInput {
 }
 
 """An edge in a connection."""
-type Task_classEdge {
+type TaskClassEdge {
   """The item at the end of the edge."""
-  node: Task_class!
+  node: TaskClass!
 
   """A cursor for use in pagination."""
   cursor: String!
 }
 
-enum Task_classOrderByInput {
+enum TaskClassOrderByInput {
   id_ASC
   id_DESC
+  userId_ASC
+  userId_DESC
   name_ASC
   name_DESC
   begin_ASC
@@ -568,29 +573,30 @@ enum Task_classOrderByInput {
   createdAt_DESC
 }
 
-type Task_classPreviousValues {
+type TaskClassPreviousValues {
   id: ID!
+  userId: String!
   name: String!
   begin: String
   end: String
 }
 
-type Task_classSubscriptionPayload {
+type TaskClassSubscriptionPayload {
   mutation: MutationType!
-  node: Task_class
+  node: TaskClass
   updatedFields: [String!]
-  previousValues: Task_classPreviousValues
+  previousValues: TaskClassPreviousValues
 }
 
-input Task_classSubscriptionWhereInput {
+input TaskClassSubscriptionWhereInput {
   """Logical AND on all given filters."""
-  AND: [Task_classSubscriptionWhereInput!]
+  AND: [TaskClassSubscriptionWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [Task_classSubscriptionWhereInput!]
+  OR: [TaskClassSubscriptionWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [Task_classSubscriptionWhereInput!]
+  NOT: [TaskClassSubscriptionWhereInput!]
 
   """
   The subscription event gets dispatched when it's listed in mutation_in
@@ -611,31 +617,33 @@ input Task_classSubscriptionWhereInput {
   The subscription event gets only dispatched when some of the field names included in this list have been updated
   """
   updatedFields_contains_some: [String!]
-  node: Task_classWhereInput
+  node: TaskClassWhereInput
 }
 
-input Task_classUpdateInput {
+input TaskClassUpdateInput {
+  userId: String
   name: String
   begin: String
   end: String
   tasks: TaskUpdateManyInput
 }
 
-input Task_classUpdateManyMutationInput {
+input TaskClassUpdateManyMutationInput {
+  userId: String
   name: String
   begin: String
   end: String
 }
 
-input Task_classWhereInput {
+input TaskClassWhereInput {
   """Logical AND on all given filters."""
-  AND: [Task_classWhereInput!]
+  AND: [TaskClassWhereInput!]
 
   """Logical OR on all given filters."""
-  OR: [Task_classWhereInput!]
+  OR: [TaskClassWhereInput!]
 
   """Logical NOT on all given filters combined by AND."""
-  NOT: [Task_classWhereInput!]
+  NOT: [TaskClassWhereInput!]
   id: ID
 
   """All values that are not equal to given value."""
@@ -676,6 +684,46 @@ input Task_classWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  userId: String
+
+  """All values that are not equal to given value."""
+  userId_not: String
+
+  """All values that are contained in given list."""
+  userId_in: [String!]
+
+  """All values that are not contained in given list."""
+  userId_not_in: [String!]
+
+  """All values less than the given value."""
+  userId_lt: String
+
+  """All values less than or equal the given value."""
+  userId_lte: String
+
+  """All values greater than the given value."""
+  userId_gt: String
+
+  """All values greater than or equal the given value."""
+  userId_gte: String
+
+  """All values containing the given string."""
+  userId_contains: String
+
+  """All values not containing the given string."""
+  userId_not_contains: String
+
+  """All values starting with the given string."""
+  userId_starts_with: String
+
+  """All values not starting with the given string."""
+  userId_not_starts_with: String
+
+  """All values ending with the given string."""
+  userId_ends_with: String
+
+  """All values not ending with the given string."""
+  userId_not_ends_with: String
   name: String
 
   """All values that are not equal to given value."""
@@ -801,17 +849,8 @@ input Task_classWhereInput {
   tasks_none: TaskWhereInput
 }
 
-input Task_classWhereUniqueInput {
+input TaskClassWhereUniqueInput {
   id: ID
-}
-
-enum Task_type {
-  SPECIAL
-  BASE
-  DATE_TO_DATE
-  DAILY
-  FERIAL
-  WEEKLY
 }
 
 """A connection to a list of items."""
@@ -825,10 +864,11 @@ type TaskConnection {
 }
 
 input TaskCreateInput {
+  userId: String!
   name: String!
   begin: String
   end: String
-  type: Task_type
+  type: TaskType
   priority: Int
   steps: StepCreateManyInput
 }
@@ -850,6 +890,8 @@ type TaskEdge {
 enum TaskOrderByInput {
   id_ASC
   id_DESC
+  userId_ASC
+  userId_DESC
   name_ASC
   name_DESC
   begin_ASC
@@ -868,10 +910,11 @@ enum TaskOrderByInput {
 
 type TaskPreviousValues {
   id: ID!
+  userId: String!
   name: String!
   begin: String
   end: String
-  type: Task_type
+  type: TaskType
   priority: Int
 }
 
@@ -924,6 +967,46 @@ input TaskScalarWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  userId: String
+
+  """All values that are not equal to given value."""
+  userId_not: String
+
+  """All values that are contained in given list."""
+  userId_in: [String!]
+
+  """All values that are not contained in given list."""
+  userId_not_in: [String!]
+
+  """All values less than the given value."""
+  userId_lt: String
+
+  """All values less than or equal the given value."""
+  userId_lte: String
+
+  """All values greater than the given value."""
+  userId_gt: String
+
+  """All values greater than or equal the given value."""
+  userId_gte: String
+
+  """All values containing the given string."""
+  userId_contains: String
+
+  """All values not containing the given string."""
+  userId_not_contains: String
+
+  """All values starting with the given string."""
+  userId_starts_with: String
+
+  """All values not starting with the given string."""
+  userId_not_starts_with: String
+
+  """All values ending with the given string."""
+  userId_ends_with: String
+
+  """All values not ending with the given string."""
+  userId_not_ends_with: String
   name: String
 
   """All values that are not equal to given value."""
@@ -1044,16 +1127,16 @@ input TaskScalarWhereInput {
 
   """All values not ending with the given string."""
   end_not_ends_with: String
-  type: Task_type
+  type: TaskType
 
   """All values that are not equal to given value."""
-  type_not: Task_type
+  type_not: TaskType
 
   """All values that are contained in given list."""
-  type_in: [Task_type!]
+  type_in: [TaskType!]
 
   """All values that are not contained in given list."""
-  type_not_in: [Task_type!]
+  type_not_in: [TaskType!]
   priority: Int
 
   """All values that are not equal to given value."""
@@ -1117,29 +1200,41 @@ input TaskSubscriptionWhereInput {
   node: TaskWhereInput
 }
 
+enum TaskType {
+  SPECIAL
+  BASE
+  DATE_TO_DATE
+  DAILY
+  FERIAL
+  WEEKLY
+}
+
 input TaskUpdateDataInput {
+  userId: String
   name: String
   begin: String
   end: String
-  type: Task_type
+  type: TaskType
   priority: Int
   steps: StepUpdateManyInput
 }
 
 input TaskUpdateInput {
+  userId: String
   name: String
   begin: String
   end: String
-  type: Task_type
+  type: TaskType
   priority: Int
   steps: StepUpdateManyInput
 }
 
 input TaskUpdateManyDataInput {
+  userId: String
   name: String
   begin: String
   end: String
-  type: Task_type
+  type: TaskType
   priority: Int
 }
 
@@ -1156,10 +1251,11 @@ input TaskUpdateManyInput {
 }
 
 input TaskUpdateManyMutationInput {
+  userId: String
   name: String
   begin: String
   end: String
-  type: Task_type
+  type: TaskType
   priority: Int
 }
 
@@ -1228,6 +1324,46 @@ input TaskWhereInput {
 
   """All values not ending with the given string."""
   id_not_ends_with: ID
+  userId: String
+
+  """All values that are not equal to given value."""
+  userId_not: String
+
+  """All values that are contained in given list."""
+  userId_in: [String!]
+
+  """All values that are not contained in given list."""
+  userId_not_in: [String!]
+
+  """All values less than the given value."""
+  userId_lt: String
+
+  """All values less than or equal the given value."""
+  userId_lte: String
+
+  """All values greater than the given value."""
+  userId_gt: String
+
+  """All values greater than or equal the given value."""
+  userId_gte: String
+
+  """All values containing the given string."""
+  userId_contains: String
+
+  """All values not containing the given string."""
+  userId_not_contains: String
+
+  """All values starting with the given string."""
+  userId_starts_with: String
+
+  """All values not starting with the given string."""
+  userId_not_starts_with: String
+
+  """All values ending with the given string."""
+  userId_ends_with: String
+
+  """All values not ending with the given string."""
+  userId_not_ends_with: String
   name: String
 
   """All values that are not equal to given value."""
@@ -1348,16 +1484,16 @@ input TaskWhereInput {
 
   """All values not ending with the given string."""
   end_not_ends_with: String
-  type: Task_type
+  type: TaskType
 
   """All values that are not equal to given value."""
-  type_not: Task_type
+  type_not: TaskType
 
   """All values that are contained in given list."""
-  type_in: [Task_type!]
+  type_in: [TaskType!]
 
   """All values that are not contained in given list."""
-  type_not_in: [Task_type!]
+  type_not_in: [TaskType!]
   priority: Int
 
   """All values that are not equal to given value."""
@@ -1394,6 +1530,7 @@ type User implements Node {
   name: String!
   mail: String!
   psw: String!
+  token: String
 }
 
 """A connection to a list of items."""
@@ -1410,6 +1547,7 @@ input UserCreateInput {
   name: String!
   mail: String!
   psw: String!
+  token: String
 }
 
 """An edge in a connection."""
@@ -1430,6 +1568,8 @@ enum UserOrderByInput {
   mail_DESC
   psw_ASC
   psw_DESC
+  token_ASC
+  token_DESC
   updatedAt_ASC
   updatedAt_DESC
   createdAt_ASC
@@ -1441,6 +1581,7 @@ type UserPreviousValues {
   name: String!
   mail: String!
   psw: String!
+  token: String
 }
 
 type UserSubscriptionPayload {
@@ -1486,12 +1627,14 @@ input UserUpdateInput {
   name: String
   mail: String
   psw: String
+  token: String
 }
 
 input UserUpdateManyMutationInput {
   name: String
   mail: String
   psw: String
+  token: String
 }
 
 input UserWhereInput {
@@ -1663,6 +1806,46 @@ input UserWhereInput {
 
   """All values not ending with the given string."""
   psw_not_ends_with: String
+  token: String
+
+  """All values that are not equal to given value."""
+  token_not: String
+
+  """All values that are contained in given list."""
+  token_in: [String!]
+
+  """All values that are not contained in given list."""
+  token_not_in: [String!]
+
+  """All values less than the given value."""
+  token_lt: String
+
+  """All values less than or equal the given value."""
+  token_lte: String
+
+  """All values greater than the given value."""
+  token_gt: String
+
+  """All values greater than or equal the given value."""
+  token_gte: String
+
+  """All values containing the given string."""
+  token_contains: String
+
+  """All values not containing the given string."""
+  token_not_contains: String
+
+  """All values starting with the given string."""
+  token_starts_with: String
+
+  """All values not starting with the given string."""
+  token_not_starts_with: String
+
+  """All values ending with the given string."""
+  token_ends_with: String
+
+  """All values not ending with the given string."""
+  token_not_ends_with: String
 }
 
 input UserWhereUniqueInput {

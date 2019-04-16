@@ -3,15 +3,17 @@ type User {
   name: String!
   mail: String!
   psw: String! 
+  token: String
 }
 
 type Task {
   id: ID! @unique
+  userId: String!
   name: String!
   begin: String
   end: String
   steps: [Step]
-  type: Task_type
+  type: TaskType
   priority: Int
 }
 
@@ -33,6 +35,7 @@ type Step {
 
 type TaskClass {
   id: ID! @unique
+  userId: String!
   name: String!
   tasks: [Task!]!
   begin: String

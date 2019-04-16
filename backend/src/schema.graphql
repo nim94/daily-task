@@ -1,9 +1,11 @@
-#import * from './generated/prisma.graphql'
+# import * from './generated/prisma.graphql'
 
 type Mutation {
-  createThing(title: String): User!
+  Signup(name: String!, mail: String!, psw: String!): User!
+  Login(name: String, mail: String, psw: String!): User!
 }
 
 type Query {
-  things: [User]!
+  Task(name: String!, begin: String, end: String, userId: String!): Task!
 }
+

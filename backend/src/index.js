@@ -8,10 +8,12 @@ server.start(
   {
     cors: {
       credentials: true,
-      origin: process.env.FRONTEND_URL,
+      origin: [process.env.DEV_URL],
     },
+    playground: '/playground',
   },
-  srv => {
+  (srv) => {
     console.log(`Server is running at http://localhost:${srv.port}`);
+    console.log(process.env.DEV_URL);
   }
 );

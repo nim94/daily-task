@@ -2,17 +2,17 @@ import React, { Component } from 'react';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import { graphql, Mutation } from 'react-apollo'
 import gql  from 'graphql-tag'
-import MyCalendar from '../components/Calendar'
+import TaskList from '../components/TaskList'
 
-class Home extends Component {
+class tasklist extends Component {
 
     render(){
         return(
             <div>
-                <MyCalendar />
+                <TaskList />
             </div>
         )
     }
 }
 
-export default Home;
+export default tasklist;
