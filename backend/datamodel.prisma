@@ -10,8 +10,8 @@ type Task {
   id: ID! @unique
   userId: String!
   name: String!
-  begin: String
-  end: String
+  begin: Int!
+  end: Int!
   steps: [Step]
   type: TaskType
   priority: Int
@@ -38,6 +38,6 @@ type TaskClass {
   userId: String!
   name: String!
   tasks: [Task!]!
-  begin: String
-  end: String
+  begin: Int!
+  end: Int!
 }

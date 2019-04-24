@@ -4,7 +4,7 @@ import { ApolloProvider } from 'react-apollo';
 import { Provider } from 'react-redux'
 import withRedux from 'next-redux-wrapper'
 import { initStore } from '../lib/store'
-/* import withApollo from '../lib/withApollo'; */ 
+import withApollo from '../lib/withApollo'; 
 
 class AppWrap extends App {
   static async getInitialProps({ Component, ctx }) {
@@ -22,16 +22,16 @@ class AppWrap extends App {
 
     return (
       <Container>
-        <Provider store={store}>
           <ApolloProvider client={apolloClient}>
+            <Provider store={store}>
               <Page>
                 <Component {...pageProps} />
               </Page>
+            </Provider>
           </ApolloProvider>
-        </Provider>
       </Container>
     );
   }
 }
 
-export default withRedux(initStore)(AppWrap);
+export default withApollo(withRedux(initStore)(AppWrap));

@@ -6,6 +6,10 @@ type Mutation {
 }
 
 type Query {
-  Task(name: String!, begin: String, end: String, userId: String!): Task!
+  getTaskList(name: String!, begin: Int!, end: Int!, userId: String!): Task!
+  getUser(name: String!): User!
 }
 
+type taskList {
+  list: [Task]
+}

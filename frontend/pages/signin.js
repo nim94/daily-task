@@ -1,9 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
-
+/* import { connect } from 'react-redux' */
+/* import { bindActionCreators } from 'redux' */
 import redirect from '../lib/redirect'
 import checkLoggedIn from '../lib/checkLoggedIn'
-
+import { UserId } from '../lib/store'
 import SigninBox from '../components/signinBox'
 
 export default class Signin extends React.Component {
@@ -11,6 +12,8 @@ export default class Signin extends React.Component {
     const { loggedInUser } = await checkLoggedIn(context.apolloClient)
 
     if (loggedInUser.user) {
+      // get user id from store
+      context.store.dispatch(UserId(loggedInUser.user.id));
       // Already signed in? No need to continue.
       // Throw them back to the main page
       redirect(context, '/')
@@ -32,4 +35,4 @@ export default class Signin extends React.Component {
       </React.Fragment>
     )
   }
-}
+} 

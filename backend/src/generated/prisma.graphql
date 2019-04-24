@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Thu Apr 04 2019 10:06:40 GMT+0200 (GMT+02:00)
+# timestamp: Fri Apr 19 2019 10:17:09 GMT+0200 (GMT+02:00)
 
 type AggregateStep {
   count: Int!
@@ -513,8 +513,8 @@ type Task implements Node {
   id: ID!
   userId: String!
   name: String!
-  begin: String
-  end: String
+  begin: Int!
+  end: Int!
   steps(where: StepWhereInput, orderBy: StepOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Step!]
   type: TaskType
   priority: Int
@@ -525,8 +525,8 @@ type TaskClass implements Node {
   userId: String!
   name: String!
   tasks(where: TaskWhereInput, orderBy: TaskOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Task!]
-  begin: String
-  end: String
+  begin: Int!
+  end: Int!
 }
 
 """A connection to a list of items."""
@@ -542,8 +542,8 @@ type TaskClassConnection {
 input TaskClassCreateInput {
   userId: String!
   name: String!
-  begin: String
-  end: String
+  begin: Int!
+  end: Int!
   tasks: TaskCreateManyInput
 }
 
@@ -577,8 +577,8 @@ type TaskClassPreviousValues {
   id: ID!
   userId: String!
   name: String!
-  begin: String
-  end: String
+  begin: Int!
+  end: Int!
 }
 
 type TaskClassSubscriptionPayload {
@@ -623,16 +623,16 @@ input TaskClassSubscriptionWhereInput {
 input TaskClassUpdateInput {
   userId: String
   name: String
-  begin: String
-  end: String
+  begin: Int
+  end: Int
   tasks: TaskUpdateManyInput
 }
 
 input TaskClassUpdateManyMutationInput {
   userId: String
   name: String
-  begin: String
-  end: String
+  begin: Int
+  end: Int
 }
 
 input TaskClassWhereInput {
@@ -764,86 +764,50 @@ input TaskClassWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  begin: String
+  begin: Int
 
   """All values that are not equal to given value."""
-  begin_not: String
+  begin_not: Int
 
   """All values that are contained in given list."""
-  begin_in: [String!]
+  begin_in: [Int!]
 
   """All values that are not contained in given list."""
-  begin_not_in: [String!]
+  begin_not_in: [Int!]
 
   """All values less than the given value."""
-  begin_lt: String
+  begin_lt: Int
 
   """All values less than or equal the given value."""
-  begin_lte: String
+  begin_lte: Int
 
   """All values greater than the given value."""
-  begin_gt: String
+  begin_gt: Int
 
   """All values greater than or equal the given value."""
-  begin_gte: String
-
-  """All values containing the given string."""
-  begin_contains: String
-
-  """All values not containing the given string."""
-  begin_not_contains: String
-
-  """All values starting with the given string."""
-  begin_starts_with: String
-
-  """All values not starting with the given string."""
-  begin_not_starts_with: String
-
-  """All values ending with the given string."""
-  begin_ends_with: String
-
-  """All values not ending with the given string."""
-  begin_not_ends_with: String
-  end: String
+  begin_gte: Int
+  end: Int
 
   """All values that are not equal to given value."""
-  end_not: String
+  end_not: Int
 
   """All values that are contained in given list."""
-  end_in: [String!]
+  end_in: [Int!]
 
   """All values that are not contained in given list."""
-  end_not_in: [String!]
+  end_not_in: [Int!]
 
   """All values less than the given value."""
-  end_lt: String
+  end_lt: Int
 
   """All values less than or equal the given value."""
-  end_lte: String
+  end_lte: Int
 
   """All values greater than the given value."""
-  end_gt: String
+  end_gt: Int
 
   """All values greater than or equal the given value."""
-  end_gte: String
-
-  """All values containing the given string."""
-  end_contains: String
-
-  """All values not containing the given string."""
-  end_not_contains: String
-
-  """All values starting with the given string."""
-  end_starts_with: String
-
-  """All values not starting with the given string."""
-  end_not_starts_with: String
-
-  """All values ending with the given string."""
-  end_ends_with: String
-
-  """All values not ending with the given string."""
-  end_not_ends_with: String
+  end_gte: Int
   tasks_every: TaskWhereInput
   tasks_some: TaskWhereInput
   tasks_none: TaskWhereInput
@@ -866,8 +830,8 @@ type TaskConnection {
 input TaskCreateInput {
   userId: String!
   name: String!
-  begin: String
-  end: String
+  begin: Int!
+  end: Int!
   type: TaskType
   priority: Int
   steps: StepCreateManyInput
@@ -912,8 +876,8 @@ type TaskPreviousValues {
   id: ID!
   userId: String!
   name: String!
-  begin: String
-  end: String
+  begin: Int!
+  end: Int!
   type: TaskType
   priority: Int
 }
@@ -1047,86 +1011,50 @@ input TaskScalarWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  begin: String
+  begin: Int
 
   """All values that are not equal to given value."""
-  begin_not: String
+  begin_not: Int
 
   """All values that are contained in given list."""
-  begin_in: [String!]
+  begin_in: [Int!]
 
   """All values that are not contained in given list."""
-  begin_not_in: [String!]
+  begin_not_in: [Int!]
 
   """All values less than the given value."""
-  begin_lt: String
+  begin_lt: Int
 
   """All values less than or equal the given value."""
-  begin_lte: String
+  begin_lte: Int
 
   """All values greater than the given value."""
-  begin_gt: String
+  begin_gt: Int
 
   """All values greater than or equal the given value."""
-  begin_gte: String
-
-  """All values containing the given string."""
-  begin_contains: String
-
-  """All values not containing the given string."""
-  begin_not_contains: String
-
-  """All values starting with the given string."""
-  begin_starts_with: String
-
-  """All values not starting with the given string."""
-  begin_not_starts_with: String
-
-  """All values ending with the given string."""
-  begin_ends_with: String
-
-  """All values not ending with the given string."""
-  begin_not_ends_with: String
-  end: String
+  begin_gte: Int
+  end: Int
 
   """All values that are not equal to given value."""
-  end_not: String
+  end_not: Int
 
   """All values that are contained in given list."""
-  end_in: [String!]
+  end_in: [Int!]
 
   """All values that are not contained in given list."""
-  end_not_in: [String!]
+  end_not_in: [Int!]
 
   """All values less than the given value."""
-  end_lt: String
+  end_lt: Int
 
   """All values less than or equal the given value."""
-  end_lte: String
+  end_lte: Int
 
   """All values greater than the given value."""
-  end_gt: String
+  end_gt: Int
 
   """All values greater than or equal the given value."""
-  end_gte: String
-
-  """All values containing the given string."""
-  end_contains: String
-
-  """All values not containing the given string."""
-  end_not_contains: String
-
-  """All values starting with the given string."""
-  end_starts_with: String
-
-  """All values not starting with the given string."""
-  end_not_starts_with: String
-
-  """All values ending with the given string."""
-  end_ends_with: String
-
-  """All values not ending with the given string."""
-  end_not_ends_with: String
+  end_gte: Int
   type: TaskType
 
   """All values that are not equal to given value."""
@@ -1212,8 +1140,8 @@ enum TaskType {
 input TaskUpdateDataInput {
   userId: String
   name: String
-  begin: String
-  end: String
+  begin: Int
+  end: Int
   type: TaskType
   priority: Int
   steps: StepUpdateManyInput
@@ -1222,8 +1150,8 @@ input TaskUpdateDataInput {
 input TaskUpdateInput {
   userId: String
   name: String
-  begin: String
-  end: String
+  begin: Int
+  end: Int
   type: TaskType
   priority: Int
   steps: StepUpdateManyInput
@@ -1232,8 +1160,8 @@ input TaskUpdateInput {
 input TaskUpdateManyDataInput {
   userId: String
   name: String
-  begin: String
-  end: String
+  begin: Int
+  end: Int
   type: TaskType
   priority: Int
 }
@@ -1253,8 +1181,8 @@ input TaskUpdateManyInput {
 input TaskUpdateManyMutationInput {
   userId: String
   name: String
-  begin: String
-  end: String
+  begin: Int
+  end: Int
   type: TaskType
   priority: Int
 }
@@ -1404,86 +1332,50 @@ input TaskWhereInput {
 
   """All values not ending with the given string."""
   name_not_ends_with: String
-  begin: String
+  begin: Int
 
   """All values that are not equal to given value."""
-  begin_not: String
+  begin_not: Int
 
   """All values that are contained in given list."""
-  begin_in: [String!]
+  begin_in: [Int!]
 
   """All values that are not contained in given list."""
-  begin_not_in: [String!]
+  begin_not_in: [Int!]
 
   """All values less than the given value."""
-  begin_lt: String
+  begin_lt: Int
 
   """All values less than or equal the given value."""
-  begin_lte: String
+  begin_lte: Int
 
   """All values greater than the given value."""
-  begin_gt: String
+  begin_gt: Int
 
   """All values greater than or equal the given value."""
-  begin_gte: String
-
-  """All values containing the given string."""
-  begin_contains: String
-
-  """All values not containing the given string."""
-  begin_not_contains: String
-
-  """All values starting with the given string."""
-  begin_starts_with: String
-
-  """All values not starting with the given string."""
-  begin_not_starts_with: String
-
-  """All values ending with the given string."""
-  begin_ends_with: String
-
-  """All values not ending with the given string."""
-  begin_not_ends_with: String
-  end: String
+  begin_gte: Int
+  end: Int
 
   """All values that are not equal to given value."""
-  end_not: String
+  end_not: Int
 
   """All values that are contained in given list."""
-  end_in: [String!]
+  end_in: [Int!]
 
   """All values that are not contained in given list."""
-  end_not_in: [String!]
+  end_not_in: [Int!]
 
   """All values less than the given value."""
-  end_lt: String
+  end_lt: Int
 
   """All values less than or equal the given value."""
-  end_lte: String
+  end_lte: Int
 
   """All values greater than the given value."""
-  end_gt: String
+  end_gt: Int
 
   """All values greater than or equal the given value."""
-  end_gte: String
-
-  """All values containing the given string."""
-  end_contains: String
-
-  """All values not containing the given string."""
-  end_not_contains: String
-
-  """All values starting with the given string."""
-  end_starts_with: String
-
-  """All values not starting with the given string."""
-  end_not_starts_with: String
-
-  """All values ending with the given string."""
-  end_ends_with: String
-
-  """All values not ending with the given string."""
-  end_not_ends_with: String
+  end_gte: Int
   type: TaskType
 
   """All values that are not equal to given value."""
