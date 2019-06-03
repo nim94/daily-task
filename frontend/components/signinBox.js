@@ -5,10 +5,11 @@ import cookie from 'cookie'
 import redirect from '../lib/redirect'
 import { connect } from 'react-redux'
 import { UserId } from '../lib/store'
+import Router from 'next/router'
 
 const SIGN_IN = gql`
-  mutation Login($name: String, $email: String, $password: String!) {
-    Login(name: $name, mail: $email, psw: $password ) {
+  mutation Login( $name: String, $email: String, $password: String! ) {
+    Login( name: $name, mail: $email, psw: $password ) {
       token
       id
     }
@@ -31,12 +32,12 @@ class SigninBox extends React.Component {
           this.props.UserId(data.Login.id);
           // Store the token in cookie
           document.cookie = cookie.serialize('token', data.Login.token, {
-            maxAge: 30 * 24 * 60 * 60 // 30 days
+            maxAge: 24 * 60 * 60 // 1 day
           })
           // Force a reload of all the current queries now that the user is
           // logged in
           this.props.client.cache.reset().then(() => {
-            redirect({}, '/home')
+            redirect({ token: data.Login.token }, '/')
           })
         }}
         onError={error => {
@@ -59,7 +60,7 @@ class SigninBox extends React.Component {
               this.email.value = this.password.value = ''
             }}
           >
-            {error && <p>Issue occurred while logging</p>}
+            {error && <p>Issue occurred while logging in</p>}
             <input
               name='email'
               placeholder='Email'

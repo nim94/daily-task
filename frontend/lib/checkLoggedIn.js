@@ -1,21 +1,27 @@
 import gql from 'graphql-tag'
 
-export default apolloClient =>
-  apolloClient
-    .query({
-      query: gql`
-        query getUser {
-          user {
-            id
-            name
+export default (apolloClient, token ) => {
+  if( token )
+    apolloClient
+      .query({
+        query: gql`
+          query getUserFromToken($token: String!) {
+            getUserFromToken(token: $token) {
+              id
+              name
+            }
           }
-        }
-      `
-    })
-    .then(({ data }) => {
-      return { loggedInUser: data }
-    })
-    .catch(() => {
-      // Fail gracefully
-      return { loggedInUser: {} }
-})
+        `,
+        variables: { token }
+      })
+      .then(({ data }) => {
+        console.log('query succesfull')
+        return { loggedInUser: data.getUserFromToken }
+      })
+      .catch(() => {
+        // Fail gracefully
+        console.log('problems during the query')
+        return { loggedInUser: {} }
+      })
+  else { console.log('token non esiste') ; return { loggedInUser: {} }}
+}

@@ -3,7 +3,9 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
 
 const InitialState = {
-  userid: ''
+  userid: '',
+  dateBegin: '',
+  dateEnd: '',
 }
 
 export const actionTypes = {
@@ -15,7 +17,7 @@ export const actionTypes = {
 export const reducer = (state = InitialState, action) => {
   switch (action.type) {
     case actionTypes.DATE:
-      return Object.assign({}, state)
+      return Object.assign({}, state, { dateBegin: action.dateBegin, dateEnd: action.dateEnd })
     case actionTypes.USER_ID:
       return Object.assign({}, state, { userid: action.userid })
     default:
@@ -24,8 +26,8 @@ export const reducer = (state = InitialState, action) => {
 }
 
 // ACTIONS
-export const dateRange = () => dispatch => {
-  return dispatch({ type: actionTypes.DATE })
+export const dateRange = (dateBegin = InitialState.dateBegin, dateEnd = InitialState.dateEnd) => dispatch => {
+  return dispatch({ type: actionTypes.DATE, dateBegin, dateEnd })
 }
 export const UserId = (userid = InitialState.userid) => dispatch => {
   return dispatch({ type: actionTypes.USER_ID, userid })

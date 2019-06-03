@@ -1,14 +1,17 @@
 
+// const { forwardTo } = require('prisma-binding');
+const jwt = require('jsonwebtoken');
+
 const Queries = {
 
-  async getTaskList(root, { name, begin, end }, ctx) {
+  async getTaskList(_, { begin, end, userId }, ctx) {
     const date = begin.getTime() <= begin.getTime() && end.getTime() >= end.getTime();
-    if( date )
-      return await ctx.db.query.tasks({ where: { name } });
+    return await ctx.db.query.tasks( {where: { userId }} ).filter(date);
   },
 
-  async getUser(root, { name }, ctx) {
-    return await ctx.db.query.user({ where: { name } });
+  async getUserFromToken(_, { token }, ctx) {
+    const thisToken = jwt.verify( token, process.env.APP_SECRET )
+    return await ctx.db.query.user( { where: { id: thisToken.id } } )
   }
 
 }

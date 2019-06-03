@@ -1,5 +1,5 @@
 # source: http://localhost:4466
-# timestamp: Fri Apr 19 2019 10:17:09 GMT+0200 (GMT+02:00)
+# timestamp: Tue May 07 2019 10:06:12 GMT+0200 (GMT+02:00)
 
 type AggregateStep {
   count: Int!
@@ -513,8 +513,8 @@ type Task implements Node {
   id: ID!
   userId: String!
   name: String!
-  begin: Int!
-  end: Int!
+  begin: Int
+  end: Int
   steps(where: StepWhereInput, orderBy: StepOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Step!]
   type: TaskType
   priority: Int
@@ -830,8 +830,8 @@ type TaskConnection {
 input TaskCreateInput {
   userId: String!
   name: String!
-  begin: Int!
-  end: Int!
+  begin: Int
+  end: Int
   type: TaskType
   priority: Int
   steps: StepCreateManyInput
@@ -876,8 +876,8 @@ type TaskPreviousValues {
   id: ID!
   userId: String!
   name: String!
-  begin: Int!
-  end: Int!
+  begin: Int
+  end: Int
   type: TaskType
   priority: Int
 }

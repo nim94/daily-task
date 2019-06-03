@@ -3,11 +3,13 @@
 type Mutation {
   Signup(name: String!, mail: String!, psw: String!): User!
   Login(name: String, mail: String, psw: String!): User!
+  createTask(data: TaskCreateInput!): Task!
+  deleteUser(where: UserWhereUniqueInput!): User
 }
 
 type Query {
-  getTaskList(name: String!, begin: Int!, end: Int!, userId: String!): Task!
-  getUser(name: String!): User!
+  getTaskList(begin: Int!, end: Int!, userId: String!): Task!
+  getUserFromToken(token: String!): User!
 }
 
 type taskList {

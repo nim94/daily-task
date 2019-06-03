@@ -1,4 +1,6 @@
+const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
+const { forwardTo } = require('prisma-binding');
 
 const Mutations = {
   
@@ -10,12 +12,14 @@ const Mutations = {
     await bcrypt.hash(psw, 10, (err, hash) => {
       if(err) return 'Error while crypting password: ' + err;
       psw = hash;
-    }); 
+    });
+    const token = jwt.sign({name,mail}, process.env.APP_SECRET, { expiresIn: '365d' });
     const signup = await ctx.db.mutation.createUser({
       data: {
         name,
         mail,
-        psw
+        psw,
+        token
       }
     });
     return signup;
@@ -29,12 +33,32 @@ const Mutations = {
         thisUser = user[i];
     if( !thisUser ) throw new Error('not existing user');
     else { 
-        await bcrypt.compare(psw, user.psw, (err) => {
-            if(err) return 'Error while decrypting password:' + err;
-        });
-        return thisUser;   
+      await bcrypt.compare(psw, thisUser.psw, (err) => {
+          if(err) return 'Error while decrypting password:' + err;
+      });
+      if( thisUser.token ){
+        if( !jwt.verify( thisUser.token, process.env.APP_SECRET ).name == thisUser.name ||
+            !jwt.verify( thisUser.token, process.env.APP_SECRET ).mail == thisUser.mail 
+          ) {
+            throw new Error('Invalid token');
+        }
+      }
+      else {
+        thisUser.token = jwt.sign({name,mail}, process.env.APP_SECRET, { expiresIn:  '365d' });
+        await ctx.db.mutation.updateUser({ token: thisUser.token }, { where: { id: thisUser.id } });
+      }
+      thisUser.token = jwt.sign( { token: thisUser.token, id: thisUser.id }, process.env.APP_SECRET, { expiresIn: '1d' } );
+      return thisUser;   
     } 
-}
+  },
+
+  async createTask() {
+    await forwardTo('db')
+  },
+
+  async deleteUser(){
+    await forwardTo('db')
+  },
 
 };
 

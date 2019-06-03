@@ -17,3 +17,9 @@ server.start(
     console.log(process.env.DEV_URL);
   }
 );
+
+// server.get("*", (req, res) => {
+//   // Use your own logic here to know if the user is loggedIn or not
+//   const token = req.cookies["token"]
+//   token && handle(req, res)
+// })
