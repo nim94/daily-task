@@ -21,7 +21,7 @@
   "homepage": "https://github.com/magnificode/react-apollo-prisma-yoga-boilerplate#readme",
   "dependencies": {
     "babel-preset-env": "^1.7.0",
-    "bcrypt": "^3.0.4",
+    "bcrypt": "^5.0.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.3",
     "dotenv": "^6.2.0",
